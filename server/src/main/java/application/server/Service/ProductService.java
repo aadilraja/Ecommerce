@@ -1,9 +1,8 @@
 package application.server.Service;
 
-import application.server.Repo.ProductRepo;
-import application.server.model.Product;
+import application.server.persistence.Repo.ProductRepo;
+import application.server.persistence.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

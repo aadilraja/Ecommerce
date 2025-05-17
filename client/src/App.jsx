@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import AddProduct from "./components/AddProduct";
 import Product from "./components/Product";
+import RegisterForm from "./components/UserRegistration";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppProvider } from "./Context/Context";
 import UpdateProduct from "./components/UpdateProduct";
@@ -54,6 +55,7 @@ function App() {
           <Route path="product/:id" element={<Product  />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/update/:id" element={<UpdateProduct />} />
+          <Route path="/user/register" element={<RegisterForm/>}/>
         </Routes>
       </BrowserRouter>
     </AppProvider>
