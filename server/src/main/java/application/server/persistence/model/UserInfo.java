@@ -1,6 +1,10 @@
 package application.server.persistence.model;
 
 import jakarta.persistence.*;
+import application.server.persistence.model.Role;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user_info")
@@ -18,8 +22,10 @@ public class UserInfo {
     private  String user_dp_path;
     @Column(name="user_email",nullable = false)
     private  String userEmail;
-    @Column(name="user_role",nullable = false)
-    private  String userRole;
+
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
+    @JoinColumn(name = "role_id")
+    private Role role;
 
 
 
@@ -84,10 +90,10 @@ public class UserInfo {
     }
 
 
-    public String getRole() {
-        return userRole;
+    public Role getRole() {
+        return role;
     }
-    public void setRole(String role) {
-        this.userRole = role;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

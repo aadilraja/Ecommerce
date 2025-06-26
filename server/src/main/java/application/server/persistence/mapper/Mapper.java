@@ -1,10 +1,14 @@
 package application.server.persistence.mapper;
 
+import application.server.Service.UserService;
 import application.server.persistence.DTOs.ProductDTO;
 import application.server.persistence.DTOs.UserCreateDTO;
 import application.server.persistence.DTOs.UserInfoDTO;
+import application.server.persistence.Repo.RoleRepo;
 import application.server.persistence.model.Product;
+import application.server.persistence.model.Role;
 import application.server.persistence.model.UserInfo;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,10 +19,12 @@ import java.util.List;
 public class Mapper {
 
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepo roleRepo;
 
     @Autowired
-    public Mapper(PasswordEncoder passwordEncoder) {
+    public Mapper(PasswordEncoder passwordEncoder, RoleRepo roleRepo) {
         this.passwordEncoder = passwordEncoder;
+        this.roleRepo = roleRepo;
     }
 
     public  ProductDTO toDTO(Product product) {
@@ -75,12 +81,16 @@ public class Mapper {
     {
         if(register == null)
             return null;
-
-        return new UserInfo(
+        UserInfo userInfo = new UserInfo(
                 register.getUserEmail(),
                 register.getUserName(),
                 passwordEncoder.encode(register.getUserPassword())
         );
+        Role role = roleRepo.findById(Integer.valueOf(1))
+                .orElseThrow(() -> new EntityNotFoundException("Role not found"));
+        userInfo.setRole(role);
+
+        return userInfo;
 
     }
 

@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+
 @Service
 @Transactional
 public class UserService implements IUserService {
@@ -26,6 +30,9 @@ public class UserService implements IUserService {
 
     }
     public UserInfo registerNewUserAccount(UserInfo user) throws UserRegistrationException {
+        System.out.println("User email at registernewunseraccount.method:"+user.getUserEmail());
+
+
         if(userRepo.existsByUserEmail(user.getUserEmail()))
         {
             System.out.println("User already exists");
@@ -50,10 +57,23 @@ public class UserService implements IUserService {
         userRepo.save(user);
     }
 
+
     @Override
     public void createVerificationToken(UserInfo user, String token) {
+
         VerificationToken myToken = new VerificationToken(token, user);
+
+        if (myToken.getExpiryDate() == null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Timestamp(cal.getTime().getTime()));
+            cal.add(Calendar.MINUTE, 60 * 24); // 24 hours
+            myToken.setExpiryDate(new Date(cal.getTime().getTime()));
+        }
+
+        System.out.println("Creating token: " + token + " for user: " + user.getUserEmail() +
+                " with expiry: " + myToken.getExpiryDate()+"user id"+user.getUser_id());
         tokenRepo.save(myToken);
+
     }
 
 

@@ -9,6 +9,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 
 import java.util.UUID;
@@ -30,6 +32,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         this.userService = userService;
     }
     @Override
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
         this.confirmRegistration(event);
     }
@@ -41,7 +44,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String recipientAddress = user.getUserEmail();
         String subject = "Registration Confirmation";
         String confirmationUrl
-                = event.getAppUrl() + "/regitrationConfirm?token=" + token;
+                = event.getAppUrl() + "/ConfirmRegistration?token=" + token;
         String message = messageSource.getMessage("message.regSucc", null, event.getLocale());
 
         SimpleMailMessage email = new SimpleMailMessage();

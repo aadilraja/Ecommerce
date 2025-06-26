@@ -12,8 +12,45 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prod_id")  // Explicitly name the column
-    private int id;  // Updated to match frontend's "id"
+    @Column(name = "prod_id")
+    private int id;
+
+
+    @Column(name = "prod_name")
+    private String name;
+
+    @Column(name = "prod_description")
+    private String description;
+
+    @Column(name = "prod_brand")
+    private String brand;
+
+    @Column(name = "prod_price")
+    private BigDecimal price;
+
+    @Column(name = "prod_category")
+    private String category;
+
+    @Column(name = "prod_quantity")
+    private String stockQuantity;
+
+    @Column(name = "prod_available")
+    private boolean productAvailable;
+
+    @Column(name = "prod_release_date")
+    private Date releaseDate;
+
+    @Column(name ="image_name" )
+    private String imageName;
+    @Column(name ="image_type" )
+    private String imageType;
+
+    @Column(name ="image_data" )
+    private byte[] imageData;
+
+    // No-arg constructor
+    public Product() {
+    }
 
     public Product(String brand, String category, String description,
                    int id, byte[] imageData, String imageName,
@@ -33,39 +70,6 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    @Column(name = "prod_name")  // Explicitly name the column
-    private String name;  // Updated to match frontend's "name"
-
-    @Column(name = "prod_description")  // Explicitly name the column
-    private String description;  // Updated to match frontend's "description"
-
-    @Column(name = "prod_brand")  // Explicitly name the column
-    private String brand;  // Updated to match frontend's "brand"
-
-    @Column(name = "prod_price")  // Explicitly name the column
-    private BigDecimal price;  // Updated to match frontend's "price"
-
-    @Column(name = "prod_category")  // Explicitly name the column
-    private String category;  // Updated to match frontend's "category"
-
-    @Column(name = "prod_quantity")  // Explicitly name the column
-    private String stockQuantity;  // Updated to match frontend's "stockQuantity"
-
-    @Column(name = "prod_available")  // Explicitly name the column
-    private boolean productAvailable;  // Updated to match frontend's "productAvailable"
-
-    @Column(name = "prod_release_date")  // Explicitly name the column
-    private Date releaseDate;  // Updated to match frontend's "releaseDate"
-
-    private String imageName;
-    private String imageType;
-
-    @Column(name ="image_data" )
-    private byte[] imageData;
-
-    // No-arg constructor
-    public Product() {
-    }
 
 
 
